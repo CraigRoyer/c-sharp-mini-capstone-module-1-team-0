@@ -1,13 +1,8 @@
-<<<<<<< HEAD
+
 ﻿using System;
 using Capstone.Classes;
 using System.Collections.Generic;
-=======
-﻿
-using System;
-using Capstone.Classes;
 
->>>>>>> f2af4c1e84a2f060d9adbb420bedfd75dbc0c54e
 namespace Capstone
 {
     class Program
@@ -44,10 +39,6 @@ namespace Capstone
                 }
                selector = int.Parse(selection);
 
-<<<<<<< HEAD
-
-                new VendingMachine().DisplayItems();
-=======
                 // if they choose to dispaly items
                 if (selector == 1)
                 {
@@ -61,7 +52,9 @@ namespace Capstone
 
                     // Second screen list, similar to above
                     
-                    Console.WriteLine($"(1) Feed Money {Environment.NewLine}(2) Select Product{Environment.NewLine}(3) Finish Transaction");
+                    Console.WriteLine($"(1) Feed Money " +
+                        $"{Environment.NewLine}(2) Select Product" +
+                        $"{Environment.NewLine}(3) Finish Transaction");
                     string secondScreenSelect = Console.ReadLine();
 
                     // if user enters an invalid input
@@ -90,22 +83,8 @@ namespace Capstone
                         decimal cash = decimal.Parse(cashInserted);
                         logSheet.AdjustBalance(cash);
                     }
-
-
-
-
                 }
-
-
-
->>>>>>> f2af4c1e84a2f060d9adbb420bedfd75dbc0c54e
-            }
-
-           
-
-
-            
-
+            }   
         }
     }
 }
