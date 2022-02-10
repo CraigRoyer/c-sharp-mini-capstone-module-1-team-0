@@ -15,10 +15,33 @@ namespace Capstone.Classes
         {
 
         }
-        public void Adjust
+        public bool AdjustBalance(decimal change)
+        {
+
+            // if you adjust the balance and the amount is NOT negative it will change the Balance
+
+            if ((balance += change) >= 0)
+            {
+                // also going to LOG cash inserted here.
+                balance += change;
+                return true;
+            }
+            // else if money inserted is not a positive INT
+            else
+            {
+                Console.WriteLine("Invalid balance amount.");
+                return false;
+            }
+        }
+
+        public void GiveChange()
+        {
+        }
 
 
-        public decimal ChangeOwed { get; set; }
+
+        static decimal balance;
+
 
         public void PrintSalesReport()
         {

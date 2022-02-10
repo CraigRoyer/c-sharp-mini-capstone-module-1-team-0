@@ -1,5 +1,5 @@
 
-﻿using System;
+using System;
 using Capstone.Classes;
 using System.Collections.Generic;
 
@@ -37,7 +37,7 @@ namespace Capstone
                     Console.WriteLine($"Please enter a NUMBER between 1 - 3");
                     selection = Console.ReadLine();
                 }
-               selector = int.Parse(selection);
+                selector = int.Parse(selection);
 
                 // if they choose to dispaly items
                 if (selector == 1)
@@ -46,45 +46,58 @@ namespace Capstone
                     new VendingMachine().DisplayItems();
                 }
                 // if user chooses to purchase an item
-                else if(selector == 2)
+                else if (selector == 2)
                 {
                     int secondSelector = 0;
-
-                    // Second screen list, similar to above
-                    
-                    Console.WriteLine($"(1) Feed Money " +
-                        $"{Environment.NewLine}(2) Select Product" +
-                        $"{Environment.NewLine}(3) Finish Transaction");
-                    string secondScreenSelect = Console.ReadLine();
-
-                    // if user enters an invalid input
-                    while (!int.TryParse(secondScreenSelect, out int num))
+                    while (secondSelector != 3)
                     {
-                        Console.WriteLine($"Please enter a number between 1 - 3");
-                        secondScreenSelect = Console.ReadLine();
-                    }
-                    secondSelector = int.Parse(secondScreenSelect);
+                        // Second screen list, similar to above
+                        Console.WriteLine($"(1) Feed Money " +
+                            $"{Environment.NewLine}(2) Select Product" +
+                            $"{Environment.NewLine}(3) Finish Transaction");
+                        string secondScreenSelect = Console.ReadLine();
 
-                    // if user chooses to insert cash
-                    if(secondSelector == 1)
-                    {
-
-                        Console.WriteLine("Please insert cash.");
-                        string cashInserted = Console.ReadLine();
-
-                        while (!decimal.TryParse(cashInserted, out decimal num))
+                        // if user enters an invalid input
+                        while (!int.TryParse(secondScreenSelect, out int num))
                         {
+                            Console.WriteLine($"Please enter a number between 1 - 3");
+                            secondScreenSelect = Console.ReadLine();
+                        }
+                        secondSelector = int.Parse(secondScreenSelect);
 
-                            Console.WriteLine($"Please insert CaSh pLeAsE.");
-                            cashInserted = Console.ReadLine();
+                        // if user chooses to insert cash
+                        if (secondSelector == 1)
+                        {
+                            Console.WriteLine("Please insert cash.");
+                            string cashInserted = Console.ReadLine();
 
+                            while (!decimal.TryParse(cashInserted, out decimal num))
+                            {
+
+                                Console.WriteLine($"Please insert CaSh pLeAsE.");
+                                cashInserted = Console.ReadLine();
+
+                            }
+
+                            decimal cash = decimal.Parse(cashInserted);
+                            logSheet.AdjustBalance(cash);
                         }
 
-                        decimal cash = decimal.Parse(cashInserted);
-                        logSheet.AdjustBalance(cash);
+                        //purchase item
+                        if (secondSelector == 2)
+                        {
+                            //updates inventory and logsheet
+                            vendingMachine.PurchaseFood(logSheet);
+                        }
+
+                        //cashout and go back to main screen
+                        if (secondSelector == 3)
+                        {
+                            logSheet.GiveChange();
+                        }
                     }
                 }
-            }   
+            }
         }
     }
 }
