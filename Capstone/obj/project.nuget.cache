@@ -4,5 +4,12 @@
   "success": true,
   "projectFilePath": "C:\\Users\\Student\\git\\c-sharp-mini-capstone-module-1-team-0\\Capstone\\Capstone.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Student\\git\\c-sharp-mini-capstone-module-1-team-0\\Capstone\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
