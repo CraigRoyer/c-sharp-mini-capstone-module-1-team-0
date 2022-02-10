@@ -1,5 +1,6 @@
 ﻿using System;
-
+using Capstone.Classes;
+using System.Collections.Generic;
 namespace Capstone
 {
     class Program
@@ -21,6 +22,9 @@ namespace Capstone
                     Console.WriteLine($"Please enter a number between 1 - 3");
                 }
                selector = int.Parse(selection);
+
+
+                new VendingMachine().DisplayItems();
             }
 
            
