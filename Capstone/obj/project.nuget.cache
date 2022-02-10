@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "f39SwGt4awXmEsUokTP8y24+I6esxnGnmMaHFCX6YR0liuSmrZDnWiYQeAtX248z7JK3tBgITL0X94mJ5j+L9A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Student\\git\\c-sharp-mini-capstone-module-1-team-0\\Capstone\\Capstone.csproj",
@@ -92,4 +93,18 @@
     "C:\\Users\\Student\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
+=======
+  "dgSpecHash": "M+c58PVVvET3Civ/jgiHwtoOMmVqe70F6zFcoVHQ6a8eHvPVyLEwAlWPBoXuNbNhYpogE6US8hD52tC2k8T+4A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Student\\git\\c-sharp-mini-capstone-module-1-team-0\\Capstone\\Capstone.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Student\\git\\c-sharp-mini-capstone-module-1-team-0\\Capstone\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
+>>>>>>> f2af4c1e84a2f060d9adbb420bedfd75dbc0c54e
 }

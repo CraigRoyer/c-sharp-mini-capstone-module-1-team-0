@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.VendingMachine
+namespace Capstone.Classes
 {
     public class Drinks : Food
     {
@@ -10,6 +10,10 @@ namespace Capstone.VendingMachine
         {
 
         }
-        public Drinks(string location, string name, decimal cost) : base(location, name, cost) { }
+        public Drinks(string location, string name, decimal cost) : base(location, name, cost) 
+        { 
+        }
+
+        
     }
 }

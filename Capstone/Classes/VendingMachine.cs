@@ -4,7 +4,37 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    class VendingMachine
+    public class VendingMachine
     {
+
+        public VendingMachine()
+        {
+            // populate vending machine here nerd
+            
+
+        }
+
+        public void GiveFood()
+        {
+
+        }
+
+
+        public void DisplayItems()
+        {
+               
+
+
+        }
+
+        public List<Food> foodItems = new List<Food>();
+        
+        
+        
+
+        public void GiveMessage()
+        {
+
+        }
     }
 }
