@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Capstone.Classes
+namespace Capstone
 {
     public class LogSheet
     {
@@ -15,6 +15,8 @@ namespace Capstone.Classes
         {
 
         }
+
+        public decimal ChangeOwed { get; set; }
         public bool AdjustBalance(decimal change)
         {
 
