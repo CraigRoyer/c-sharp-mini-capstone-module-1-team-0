@@ -121,7 +121,7 @@ namespace Capstone.Classes
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00"); //left off here
+                    sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00");
                 }
             }
             catch (Exception)
@@ -129,41 +129,26 @@ namespace Capstone.Classes
 
                 Console.WriteLine("Vending machine self destructed!");
             }
-        
-        Console.WriteLine($"Your change is: {balance.ToString("C")}");
-
-            while (balance >= 0.25M)
+            Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
             {
-                balance -= 0.25M;
-                Console.WriteLine("Here's a quarter");
-                Thread.Sleep(800);
-                Console.Clear();
-                Console.WriteLine("CLINK");
-                Thread.Sleep(500);
-                Console.Clear();
-            }
-            while (balance >= 0.10M)
+                ["Quarter"] = 0.25M,
+                ["Dime"] = 0.10M,
+                ["Nickel"] = 0.05M
+            };
+            foreach (KeyValuePair<string, decimal> coin in coins)
             {
-                balance -= 0.10M;
-                Console.WriteLine("Here's a dime");
-                Thread.Sleep(800);
-                Console.Clear();
-                Console.WriteLine("cLiNk");
-                Thread.Sleep(500);
-                Console.Clear();
+                while (balance >= coin.Value)
+                {
+                    Console.WriteLine($"Your change is: {balance.ToString("C")}");
+                    balance -= coin.Value;
+                    Console.WriteLine($"Here's a {coin.Key}");
+                    Thread.Sleep(800);
+                    Console.Clear();
+                    Console.WriteLine("CLINK");
+                    Thread.Sleep(500);
+                    Console.Clear();
+                }
             }
-            while (balance >= 0.05M)
-            {
-                balance -= 0.05M;
-                Console.WriteLine("Here's a nickel");
-                Thread.Sleep(800);
-                Console.Clear();
-                Console.WriteLine("clink");
-                Thread.Sleep(500);
-                Console.Clear();
-            }
-
-
         }
 
 
