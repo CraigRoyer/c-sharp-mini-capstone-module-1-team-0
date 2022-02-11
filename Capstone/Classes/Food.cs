@@ -6,6 +6,7 @@ namespace Capstone.Classes
 {
     public class Food
     {
+        static int startingSnacks = 5;
         public string Name { get; }
         public decimal Cost { get; set; }
         public string Location { get; }
@@ -16,7 +17,7 @@ namespace Capstone.Classes
             this.Location = location;
             this.Name = name;
             this.Cost = cost;
-            this.SnacksLeft = 5;
+            this.SnacksLeft = startingSnacks;
         }
         public virtual void PrintMessage() { }
 

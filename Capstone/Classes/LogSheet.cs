@@ -13,7 +13,7 @@ namespace Capstone.Classes
             balance = 0;
 
         }
-        public void Audit(Food foodItem)
+        public bool Audit(Food foodItem)
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -25,15 +25,22 @@ namespace Capstone.Classes
                 {
                     sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}"); //left off here
                 }
+                return true;
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("The Log file was corrupted");
+                return false;
             }
             catch (Exception)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
+                return false;
             }
         }
 
-        public void Audit(decimal money) 
+        public bool Audit(decimal money) 
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -45,11 +52,18 @@ namespace Capstone.Classes
                 {
                     sw.WriteLine($"{DateTime.UtcNow} FEED MONEY: {this.Balance.ToString("C")} {(this.Balance + money).ToString("C")}"); //left off here
                 }
+                return true;
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("The Log file was corrupted");
+                return false;
             }
             catch (Exception)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
+                return false;
             }
             //tracks money inserted
 
@@ -61,7 +75,7 @@ namespace Capstone.Classes
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
-            if (change == 1 || change == 2 || change == 5 || change == 10)
+            if (change == 0 || change == 1 || change == 2 || change == 5 || change == 10)
             {
      
                 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Reflection;
-using System.Runtime;
+
 namespace Capstone.Classes
 {
     public class VendingMachine
@@ -15,7 +13,7 @@ namespace Capstone.Classes
             string directory = Environment.CurrentDirectory;
             string fileName = @"vendingmachine.csv";
             string fullPath = Path.Combine(directory, fileName);
-
+            
             //read file and fill foodItems list with the food
             try
             {
@@ -52,21 +50,24 @@ namespace Capstone.Classes
                         {
                             Gum item  = new Gum(location, itemName, price);
                             foodItems.Add(item);
-                        }
-                        
+                        }                       
                     }
                 }
             }
+            catch (IOException)
+            {
+                Console.WriteLine("The vending machine file was not found");
+            }
             catch (Exception)
             {
-                Console.WriteLine("The vending machine guy messed up...BIG TIME");
+                Console.WriteLine("There was a mistake inside the vending machine file");
             }
-
         }
 
         public void PurchaseFood(LogSheet logsheet)
         {
             this.DisplayItems(logsheet);
+            logsheet.AdjustBalance(0);
             Console.WriteLine("Please enter item key:");//updates inventory and logsheet
             string order = Console.ReadLine();
             Console.Clear();
@@ -85,7 +86,6 @@ namespace Capstone.Classes
                         {
                             item.PrintMessage();//dispense food - print message
                             item.SnacksLeft--; // track inventory
-
                         }
                         
                     }
@@ -100,9 +100,6 @@ namespace Capstone.Classes
             {
                 Console.WriteLine($"{item.Location} | {item.Name} | ${item.Cost} | Remaining: {item.SnacksLeft}");
             }
-            logSheet.AdjustBalance(0);
-
         }
-
     }
 }
