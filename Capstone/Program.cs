@@ -43,7 +43,7 @@ namespace Capstone
                 if (selector == 1)
                 {
                     // calling method from VM class
-                    new VendingMachine().DisplayItems();
+                    vendingMachine.DisplayItems(logSheet);
                 }
                 // if user chooses to purchase an item
                 else if (selector == 2)
@@ -70,6 +70,7 @@ namespace Capstone
                         {
                             Console.WriteLine("Please insert cash.");
                             string cashInserted = Console.ReadLine();
+                            
 
                             while (!decimal.TryParse(cashInserted, out decimal num))
                             {
@@ -86,7 +87,6 @@ namespace Capstone
                         //purchase item
                         if (secondSelector == 2)
                         {
-                            //updates inventory and logsheet
                             vendingMachine.PurchaseFood(logSheet);
                         }
 

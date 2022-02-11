@@ -8,7 +8,7 @@ namespace Capstone.Classes
     {
         public override void PrintMessage()
         {
-
+            Console.WriteLine("Munch Munch, Yum!");
         }
         public Candy(string location, string name, decimal cost) : base(location, name, cost) { }
     }
