@@ -92,7 +92,7 @@ namespace Capstone
                             }
 
                             decimal cash = decimal.Parse(cashInserted);
-                            logSheet.AdjustBalance(cash, logSheet);
+                            logSheet.AdjustBalance(cash);
                         }
 
                         //purchase item
