@@ -69,6 +69,7 @@ namespace Capstone.Classes
             this.DisplayItems(logsheet);
             Console.WriteLine("Please enter item key:");//updates inventory and logsheet
             string order = Console.ReadLine();
+            Console.Clear();
 
             foreach (Food item in foodItems)
             {
@@ -80,7 +81,7 @@ namespace Capstone.Classes
                     }
                     else
                     {
-                        if (logsheet.AdjustBalance(item)) //calling adjustbalance...this is returning a bool AND adjusting our balance
+                        if (logsheet.AdjustBalance(item, logsheet)) //calling adjustbalance...this is returning a bool AND adjusting our balance
                         {
                             item.PrintMessage();//dispense food - print message
                             item.SnacksLeft--; // track inventory
@@ -99,7 +100,7 @@ namespace Capstone.Classes
             {
                 Console.WriteLine($"{item.Location} | {item.Name} | ${item.Cost} | Remaining: {item.SnacksLeft}");
             }
-            logSheet.AdjustBalance(0);
+            logSheet.AdjustBalance(0, logSheet);
 
         }
 
