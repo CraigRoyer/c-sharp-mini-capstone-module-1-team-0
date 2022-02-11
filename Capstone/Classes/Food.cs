@@ -10,7 +10,7 @@ namespace Capstone.Classes
         public decimal Cost { get; set; }
         public string Location { get; }
         public int snacksLeft;
-        public int SnacksLeft { get; }
+        public int SnacksLeft { get; set; }
         public Food(string location, string name, decimal cost)
         {
             this.Location = location;

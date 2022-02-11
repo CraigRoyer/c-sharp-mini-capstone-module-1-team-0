@@ -8,7 +8,7 @@ namespace Capstone.Classes
     {
         public override void PrintMessage()
         {
-
+            Console.WriteLine("Glug Glug, Yum!");
         }
         public Drink(string location, string name, decimal cost) : base(location, name, cost) 
         { 

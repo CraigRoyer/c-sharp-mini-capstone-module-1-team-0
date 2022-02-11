@@ -8,7 +8,7 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
-        public List<object> foodItems = new List<object>();
+        public List<Food> foodItems = new List<Food>();
         public VendingMachine()
         {
 
@@ -24,51 +24,88 @@ namespace Capstone.Classes
                     while (!sr.EndOfStream)
                     {
                         string line = sr.ReadLine();
+                        //reading each line of the csv file
                         string[] splitLine = line.Split("|");
+                        //separating the info from each line
                         string className = splitLine[splitLine.Length - 1];
-                        //object[] detailsForConstructor = new object[]
-                        //{
-                        //splitLine[0],
-                        //splitLine[1],
-                        //decimal.Parse(splitLine[2])
-                        //};
-                        //object item = Activator.CreateInstance(Type.GetType($"Capstone.Classes.{className}"), detailsForConstructor);
-
-                        //foodItems.Add(item);
+                        string location = splitLine[0];
+                        string itemName = splitLine[1];
+                        decimal price = decimal.Parse(splitLine[2]);
+                        //retrieving the classname, location, name, price
+                        
+                        if (className == "Candy")
+                        {
+                            Candy item = new Candy(location, itemName, price);
+                            foodItems.Add(item);
+                        }
+                        if (className == "Chip")
+                        {
+                            Chip item = new Chip(location, itemName, price);
+                            foodItems.Add(item);
+                        }
+                        if (className == "Drink")
+                        {
+                            Drink item  = new Drink(location, itemName, price);
+                            foodItems.Add(item);
+                        }
+                        if (className == "Gum")
+                        {
+                            Gum item  = new Gum(location, itemName, price);
+                            foodItems.Add(item);
+                        }
+                        
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("The vending machine guy messed up");
+                Console.WriteLine("The vending machine guy messed up...BIG TIME");
             }
 
             //populate vending machine here nerd
-           
+            foodItems[0].GetType().GetMethod("PrintMessage").Invoke(foodItems[0], null);
             //will print "thing"
         }
 
         public void PurchaseFood(LogSheet logsheet)
         {
+            this.DisplayItems(logsheet);
+            Console.WriteLine("Please enter item key:");//updates inventory and logsheet
+            string order = Console.ReadLine();
+            Console.Clear();
 
+            foreach (Food item in foodItems)
+            {
+                if (order.ToUpper() == item.Location)
+                {
+                    if (item.SnacksLeft == 0)
+                    {
+                        Console.WriteLine("SOLD OUT :_(");
+                    }
+                    else
+                    {
+                        if (logsheet.AdjustBalance(item, logsheet)) //calling adjustbalance...this is returning a bool AND adjusting our balance
+                        {
+                            item.PrintMessage();//dispense food - print message
+                            item.SnacksLeft--; // track inventory
+
+                        }
+                        
+                    }
+                }
+            }
         }
 
 
-        public void DisplayItems()
+        public void DisplayItems(LogSheet logSheet)
         {
-
-
-
-        }
-
-
-
-
-
-
-        public void GiveMessage()
-        {
+            foreach (Food item in foodItems)
+            {
+                Console.WriteLine($"{item.Location} | {item.Name} | ${item.Cost} | Remaining: {item.SnacksLeft}");
+            }
+            logSheet.AdjustBalance(0, logSheet);
 
         }
+
     }
 }
