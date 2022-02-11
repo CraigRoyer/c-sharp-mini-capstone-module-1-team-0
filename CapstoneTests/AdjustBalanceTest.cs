@@ -15,7 +15,7 @@ namespace Capstone.Classes.Tests
             decimal change = 1.00M;
 
             //act
-            bool result = logSheet.AdjustBalance(change, logSheet);
+            bool result = logSheet.AdjustBalance(change);
 
             //assert
             Assert.IsTrue(result);
@@ -29,7 +29,7 @@ namespace Capstone.Classes.Tests
             decimal change = 3.00M;
 
             //act
-            bool result = logSheet.AdjustBalance(change, logSheet);
+            bool result = logSheet.AdjustBalance(change);
 
             //assert
             Assert.IsFalse(result);
@@ -43,7 +43,7 @@ namespace Capstone.Classes.Tests
             decimal change = -1.00M;
 
             //act
-            bool result = logSheet.AdjustBalance(change, logSheet);
+            bool result = logSheet.AdjustBalance(change);
 
             //assert
             Assert.IsFalse(result);

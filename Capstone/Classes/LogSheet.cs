@@ -13,7 +13,7 @@ namespace Capstone.Classes
             balance = 0;
 
         }
-        public void Audit(Food foodItem, LogSheet logSheet)
+        public void Audit(Food foodItem)
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -23,17 +23,17 @@ namespace Capstone.Classes
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {logSheet.Balance.ToString("C")} {(logSheet.Balance - foodItem.Cost).ToString("C")}"); //left off here
+                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}"); //left off here
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
             }
         }
 
-        public void Audit(decimal money, LogSheet logSheet) 
+        public void Audit(decimal money) 
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -43,10 +43,10 @@ namespace Capstone.Classes
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine($"{DateTime.UtcNow} FEED MONEY: {logSheet.Balance.ToString("C")} {(logSheet.Balance + money).ToString("C")}"); //left off here
+                    sw.WriteLine($"{DateTime.UtcNow} FEED MONEY: {this.Balance.ToString("C")} {(this.Balance + money).ToString("C")}"); //left off here
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
@@ -57,7 +57,7 @@ namespace Capstone.Classes
         }
 
         //public decimal ChangeOwed { get; set; } i dont think we need this anymore thanks DAVID
-        public bool AdjustBalance(decimal change, LogSheet logSheet) 
+        public bool AdjustBalance(decimal change) 
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
@@ -65,7 +65,7 @@ namespace Capstone.Classes
             {
      
                 
-                    this.Audit(change, logSheet);// also going to LOG cash inserted here.
+                    this.Audit(change);// also going to LOG cash inserted here.
                     balance += change;
                     Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
                     return true;
@@ -77,14 +77,14 @@ namespace Capstone.Classes
                 return false;
             
         }
-        public bool AdjustBalance(Food foodItem, LogSheet logSheet) 
+        public bool AdjustBalance(Food foodItem) 
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
 
             if ((balance - foodItem.Cost) >= 0)
             {
-                this.Audit(foodItem, logSheet);// going to LOG food purchased here.
+                this.Audit(foodItem);// going to LOG food purchased here.
                 balance -= foodItem.Cost;
                 Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
                 return true;
@@ -110,7 +110,7 @@ namespace Capstone.Classes
                     sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00"); //left off here
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
