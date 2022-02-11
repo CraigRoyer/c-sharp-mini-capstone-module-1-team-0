@@ -4,18 +4,21 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    public abstract class Food
+    public class Food
     {
         public string Name { get; }
-        public decimal Cost { get; }
+        public decimal Cost { get; set; }
         public string Location { get; }
+        public int snacksLeft;
+        public int SnacksLeft { get; }
         public Food(string location, string name, decimal cost)
         {
             this.Location = location;
             this.Name = name;
             this.Cost = cost;
+            this.SnacksLeft = 5;
         }
-        public abstract void PrintMessage();
+        public virtual void PrintMessage() { }
 
     }
 }
