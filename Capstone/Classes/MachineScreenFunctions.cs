@@ -65,7 +65,7 @@ namespace Capstone.Classes
             decimal cash = decimal.Parse(cashInserted);
             logSheet.AdjustBalance(cash);
         }
-
+        
 
     }
 }
