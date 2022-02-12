@@ -23,6 +23,32 @@ namespace Capstone.Classes.Tests
             //assert
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void AdjustBalanceFoodOverLoadTest_HappyPathFalse()
+        {
+            //arrange
+            LogSheet logSheet = new LogSheet();
+            Food item = new Food("here", "craig's crunchy cakes", 0.99M);
 
+            //act
+            bool result = logSheet.AdjustBalance(item);
+
+            //assert
+            Assert.IsFalse(result);
+        }
+        [TestMethod]
+        public void AdjustBalanceFoodOverLoadTest_IsFalseWithBalance()
+        {
+            //arrange
+            LogSheet logSheet = new LogSheet();
+            Food item = new Food("here", "craig's crunchy cakes", 1.99M);
+            logSheet.AdjustBalance(1M);
+
+            //act
+            bool result = logSheet.AdjustBalance(item);
+
+            //assert
+            Assert.IsFalse(result);
+        }
     }
 }
