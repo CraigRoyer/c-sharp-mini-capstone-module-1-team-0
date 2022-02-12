@@ -15,12 +15,19 @@ namespace Capstone.Classes
 
             string selection = Console.ReadLine();
             Console.Clear();
-
+            if (selection == null)
+            {
+                return 0;
+            }
             // while user selection is NOT a useable or valid input.
             while (!int.TryParse(selection, out int num))
             {
                 // if user input is spelled out instead of an INT return this for another selecton
-                Console.WriteLine($"Please enter a number between 1 - 3");
+                Console.WriteLine($"Please enter a number between 1 - 3" +
+                     $"{Environment.NewLine}(1)Display Vending Machine Items" +
+                    $"{Environment.NewLine}(2)Purchase" +
+                    $"{Environment.NewLine}(3)Exit");
+                
                 selection = Console.ReadLine();
                 Console.Clear();
             }
@@ -38,10 +45,17 @@ namespace Capstone.Classes
             string selectString = Console.ReadLine();
             Console.Clear();
 
+            if (selectString == null)
+            {
+                return 0;
+            }
             // if user enters an invalid input
             while (!int.TryParse(selectString, out int num))
             {
-                Console.WriteLine($"Please enter a number between 1 - 3");
+                Console.WriteLine($"Please enter a number between 1 - 3" +
+                $"{Environment.NewLine}(1) Feed Money " +
+                $"{Environment.NewLine}(2) Select Product" +
+                $"{Environment.NewLine}(3) Finish Transaction");
                 selectString = Console.ReadLine();
                 Console.Clear();
             }
@@ -51,7 +65,7 @@ namespace Capstone.Classes
         }
         public void InsertCash(LogSheet logSheet)
         {
-            Console.WriteLine("Please insert cash in increments of $1, $2, $5, or $10:");
+            Console.Write("Accepts $1, $2, $5, and $10: $");
             string cashInserted = Console.ReadLine();
             Console.Clear();
 

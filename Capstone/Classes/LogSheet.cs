@@ -12,26 +12,28 @@ namespace Capstone.Classes
             balance = 0;
 
         }
-        public bool Audit(Food foodItem)
+        public bool Audit(Food foodItem) //updates logsheet / tracks transactions.
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
             string fullPath = Path.Combine(directory, file);
+            //making a path to logsheet
 
             try
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}"); //left off here
+                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}");
+                    // adds a line to logsheet file with date/time, food purchased, current balance, and balance after transaction   
                 }
                 return true;
             }
-            catch (IOException)
+            catch (IOException) //if for some reason we can't write a logsheet file...VERY WRONG
             {
                 Console.WriteLine("The Log file was corrupted");
                 return false;
             }
-            catch (Exception)
+            catch (Exception) //catch all exception (I.E. corrupted foodItem)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
@@ -39,7 +41,7 @@ namespace Capstone.Classes
             }
         }
 
-        public bool Audit(decimal money)
+        public bool Audit(decimal money) //tracks money added
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -69,8 +71,8 @@ namespace Capstone.Classes
 
         }
 
-        //public decimal ChangeOwed { get; set; } i dont think we need this anymore thanks DAVID
-        public bool AdjustBalance(decimal change)
+        
+        public bool AdjustBalance(decimal change) // adjusts balance and determines if cash deposit was successful
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
@@ -86,7 +88,7 @@ namespace Capstone.Classes
             }
             // else if money inserted is not a positive INT
 
-            Console.WriteLine("Invalid dollar amount. We only accept WHOLE DOLLAR$");
+            Console.WriteLine("Invalid dollar amount. We only accept $1, $2, $5, or $10 bills.");
             return false;
 
         }
@@ -130,7 +132,8 @@ namespace Capstone.Classes
                 {
                     ["Quarter"] = 0.25M,
                     ["Dime"] = 0.10M,
-                    ["Nickel"] = 0.05M
+                    ["Nickel"] = 0.05M,
+                    
                 };
                 foreach (KeyValuePair<string, decimal> coin in coins)
                 {
@@ -196,7 +199,7 @@ namespace Capstone.Classes
             return passed;
 
         }
-        public bool CreateSalesReport(VendingMachine machine)
+        public bool CreateSalesReport(VendingMachine machine) //pull up our current vending machine
         {
             string directory = Environment.CurrentDirectory;
             string file = "SalesReport.txt";
@@ -223,14 +226,14 @@ namespace Capstone.Classes
                     if (salesReport.ContainsKey(item.Name))
                     {
                         int snacksSold = salesReport[item.Name] + (item.startingSnacks - item.SnacksLeft);
-                        salesReport[item.Name] = snacksSold;
+                        salesReport[item.Name] = snacksSold; // calculate how many snacks we sold, using our starting snacks and subtracting our snacks left
                     }
                     else
                     {
-                        salesReport[item.Name] = (item.startingSnacks - item.SnacksLeft);
+                        salesReport[item.Name] = (item.startingSnacks - item.SnacksLeft); //will create a new item in the sales report if it wasn't originally in our .csv
                     }
                 }
-                using (StreamWriter sw = new StreamWriter(fullPath, false))
+                using (StreamWriter sw = new StreamWriter(fullPath, false)) //records the date/time of sales report being accessed
                 {
                     sw.WriteLine($"{DateTime.UtcNow}");
                     foreach (KeyValuePair<string, int> item in salesReport)

@@ -12,10 +12,10 @@ namespace Capstone
             // setting selector for user selection
             int selector = 0;
 
-            //restock the vending machine here
+            //restock the vending machine here everytime program is run (this opens up our .csv file)
             VendingMachine vendingMachine = new VendingMachine();
 
-            // creating logSheet for audit
+            // creating logSheet for audit & sets balance to 0.
             LogSheet logSheet = new LogSheet();
 
             // while not choosing to exit 
@@ -29,7 +29,7 @@ namespace Capstone
                 {
                     Console.Clear();
                     // calling method from VM class
-                    vendingMachine.DisplayItems(logSheet);
+                    vendingMachine.DisplayItems();
                 }
                 else if (selector == 4)
                 {

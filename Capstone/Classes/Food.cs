@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    public class Food
+    public abstract class Food
     {
         public int startingSnacks = 5;
         public string Name { get; }
@@ -19,7 +19,7 @@ namespace Capstone.Classes
             this.Cost = cost;
             this.SnacksLeft = startingSnacks;
         }
-        public virtual void PrintMessage() { }
+        public abstract void PrintMessage();
 
     }
 }
