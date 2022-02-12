@@ -31,6 +31,10 @@ namespace Capstone
                     // calling method from VM class
                     vendingMachine.DisplayItems(logSheet);
                 }
+                else if (selector == 4)
+                {
+                    logSheet.PrintSalesReport();
+                }
                 // if user chooses to purchase an item
                 else if (selector == 2)
                 {
@@ -58,7 +62,7 @@ namespace Capstone
                         if (secondSelector == 3)
                         {
                             Console.Clear();
-                            logSheet.GiveChange();
+                            logSheet.GiveChange(vendingMachine);
                         }
                     }
                 }

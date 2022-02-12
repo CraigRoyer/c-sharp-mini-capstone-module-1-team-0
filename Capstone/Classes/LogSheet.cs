@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Threading;
 
@@ -40,7 +39,7 @@ namespace Capstone.Classes
             }
         }
 
-        public bool Audit(decimal money) 
+        public bool Audit(decimal money)
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -71,27 +70,27 @@ namespace Capstone.Classes
         }
 
         //public decimal ChangeOwed { get; set; } i dont think we need this anymore thanks DAVID
-        public bool AdjustBalance(decimal change) 
+        public bool AdjustBalance(decimal change)
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
             if (change == 0 || change == 1 || change == 2 || change == 5 || change == 10)
             {
-     
-                
-                    this.Audit(change);// also going to LOG cash inserted here.
-                    balance += change;
-                    Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
-                    return true;
-                
+
+
+                this.Audit(change);// also going to LOG cash inserted here.
+                balance += change;
+                Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
+                return true;
+
             }
             // else if money inserted is not a positive INT
-            
-                Console.WriteLine("Invalid dollar amount. We only accept WHOLE DOLLAR$");
-                return false;
-            
+
+            Console.WriteLine("Invalid dollar amount. We only accept WHOLE DOLLAR$");
+            return false;
+
         }
-        public bool AdjustBalance(Food foodItem) 
+        public bool AdjustBalance(Food foodItem)
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
@@ -111,7 +110,7 @@ namespace Capstone.Classes
             }
         }
 
-        public void GiveChange()
+        public void GiveChange(VendingMachine vendingMachine)
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -129,6 +128,8 @@ namespace Capstone.Classes
 
                 Console.WriteLine("Vending machine self destructed!");
             }
+            this.CreateSalesReport(vendingMachine);
+
             Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
             {
                 ["Quarter"] = 0.25M,
@@ -153,20 +154,106 @@ namespace Capstone.Classes
                 }
             }
         }
-
-
-
         static decimal balance;
-        public decimal Balance 
-        { 
+        public decimal Balance
+        {
             get
-                
+
             { return balance; }
         }
-
-
-        public void PrintSalesReport()
+        public bool PrintSalesReport()
         {
+            string directory = Environment.CurrentDirectory;
+            string file = "SalesReport.txt";
+            string fullPath = Path.Combine(directory, file);
+            bool passed = false;
+            try
+            {
+                if (File.Exists(fullPath))
+                {
+                    using (StreamReader sr = new StreamReader(fullPath))
+                    {
+                        while (!sr.EndOfStream)
+                        {
+                            Console.WriteLine(sr.ReadLine());
+                        }
+                    }
+
+                    passed = true;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("There was an error with the sales report.");
+
+            }
+            Console.WriteLine("Please press enter to exit");
+            Console.ReadLine();
+            Console.Clear();
+            return passed;
+
+        }
+        public bool CreateSalesReport(VendingMachine machine)
+        {
+            string directory = Environment.CurrentDirectory;
+            string file = "SalesReport.txt";
+            string fullPath = Path.Combine(directory, file);
+
+            try
+            {
+                Dictionary<string, int> salesReport = new Dictionary<string, int>();
+                if (File.Exists(fullPath))
+                {
+                    using (StreamReader sr = new StreamReader(fullPath))
+                    {
+                        sr.ReadLine();
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] splitLine = line.Split("|");
+                            salesReport[splitLine[0]] = int.Parse(splitLine[1]);
+                        }
+                    }
+                }
+                foreach (Food item in machine.foodItems)
+                {
+                    if (salesReport.ContainsKey(item.Name))
+                    {
+                        int snacksSold = salesReport[item.Name] + (item.startingSnacks - item.SnacksLeft);
+                        salesReport[item.Name] = snacksSold;
+                    }
+                    else
+                    {
+                        salesReport[item.Name] = (item.startingSnacks - item.SnacksLeft);
+                    }
+                }
+                using (StreamWriter sw = new StreamWriter(fullPath, false))
+                {
+                    sw.WriteLine($"{DateTime.UtcNow}");
+                    foreach (KeyValuePair<string, int> item in salesReport)
+                    {
+                        sw.WriteLine($"{item.Key}|{item.Value}");
+                    }
+                }
+                return true;
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("The Log file was corrupted");
+                return false;
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Vending machine self destructed!");
+                return false;
+            }
+
+
+
+
+
+
 
         }
     }
