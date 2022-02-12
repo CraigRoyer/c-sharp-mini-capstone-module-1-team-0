@@ -137,14 +137,17 @@ namespace Capstone.Classes
             };
             foreach (KeyValuePair<string, decimal> coin in coins)
             {
+                Console.WriteLine($"Your change is: {balance.ToString("C")}");
+                Thread.Sleep(800);
+                Console.Clear();
                 while (balance >= coin.Value)
                 {
-                    Console.WriteLine($"Your change is: {balance.ToString("C")}");
+                   
                     balance -= coin.Value;
-                    Console.WriteLine($"Here's a {coin.Key}");
+                    Console.WriteLine("**CLINK**");
                     Thread.Sleep(800);
                     Console.Clear();
-                    Console.WriteLine("CLINK");
+                    Console.WriteLine($"Here's a {coin.Key}");
                     Thread.Sleep(500);
                     Console.Clear();
                 }

@@ -8,7 +8,26 @@ namespace Capstone.Classes
     {
         public override void PrintMessage()
         {
-            Console.WriteLine("Crunch Crunch, Yum!");
+
+            string title = @"
+
+Here's your chips!
+                               _
+                        ____,-' `-.
+""Crunch              .' .--.\.    \
+     Crunch,      _.' `-.`--'  `.   \
+       Yum!""    /       \ `.-' /`-. `-.
+               /`-.      `-.` /.-' `.  \
+              _\   \        `-. \.-' \.'
+       ____ .' \,-. `.         `.\.-'
+      /  .-`--./   \  \     ___.'      
+    ,-`-/  ___/__._'   /_.-'
+   (  .-`-(__ /  `.`-''
+    `/   |/  `|    |
+     `--' \   \    |
+           `--'`._.'
+";
+            Console.WriteLine(title);
         }
         public Chip(string location, string name, decimal cost) : base(location, name, cost) { }
         
