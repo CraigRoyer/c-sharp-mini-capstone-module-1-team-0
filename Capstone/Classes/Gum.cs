@@ -9,6 +9,8 @@ namespace Capstone.Classes
         public override void PrintMessage()
         {
             string title = @"
+
+     Here's your gum!
         
        .-_---------------. ""Chew            
       / /_  | | |\  /|  /|     Chew,

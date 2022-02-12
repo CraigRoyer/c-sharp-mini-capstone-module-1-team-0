@@ -8,7 +8,7 @@ namespace Capstone.Classes
     {
         public int FirstScreen()
         {
-            Console.WriteLine($"Hello Patron! Please enter" +
+            Console.WriteLine($"Welcome to Snack Zaddy 3000:" +
                     $"{Environment.NewLine}(1)Display Vending Machine Items" +
                     $"{Environment.NewLine}(2)Purchase" +
                     $"{Environment.NewLine}(3)Exit");
@@ -20,7 +20,7 @@ namespace Capstone.Classes
             while (!int.TryParse(selection, out int num))
             {
                 // if user input is spelled out instead of an INT return this for another selecton
-                Console.WriteLine($"Please enter a NUMBER between 1 - 3");
+                Console.WriteLine($"Please enter a number between 1 - 3");
                 selection = Console.ReadLine();
                 Console.Clear();
             }
@@ -51,7 +51,7 @@ namespace Capstone.Classes
         }
         public void InsertCash(LogSheet logSheet)
         {
-            Console.WriteLine("Please insert cash.");
+            Console.WriteLine("Please insert cash in increments of $1, $2, $5, or $10:");
             string cashInserted = Console.ReadLine();
             Console.Clear();
 

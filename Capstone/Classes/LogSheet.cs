@@ -115,12 +115,39 @@ namespace Capstone.Classes
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
             string fullPath = Path.Combine(directory, file);
+            decimal change = balance;
 
             try
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
                     sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00");
+                    balance = 0M;
+                }
+                this.CreateSalesReport(vendingMachine);
+
+                Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
+                {
+                    ["Quarter"] = 0.25M,
+                    ["Dime"] = 0.10M,
+                    ["Nickel"] = 0.05M
+                };
+                foreach (KeyValuePair<string, decimal> coin in coins)
+                {
+
+                    while (change >= coin.Value)
+                    {
+                        Console.WriteLine($"Your change is: {change.ToString("C")}");
+                        Thread.Sleep(800);
+                        Console.Clear();
+                        change -= coin.Value;
+                        Console.WriteLine("**CLINK**");
+                        Thread.Sleep(500);
+                        Console.Clear();
+                        Console.WriteLine($"Here's a {coin.Key}");
+                        Thread.Sleep(800);
+                        Console.Clear();
+                    }
                 }
             }
             catch (Exception)
@@ -128,31 +155,7 @@ namespace Capstone.Classes
 
                 Console.WriteLine("Vending machine self destructed!");
             }
-            this.CreateSalesReport(vendingMachine);
-
-            Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
-            {
-                ["Quarter"] = 0.25M,
-                ["Dime"] = 0.10M,
-                ["Nickel"] = 0.05M
-            };
-            foreach (KeyValuePair<string, decimal> coin in coins)
-            {
-                Console.WriteLine($"Your change is: {balance.ToString("C")}");
-                Thread.Sleep(800);
-                Console.Clear();
-                while (balance >= coin.Value)
-                {
-                   
-                    balance -= coin.Value;
-                    Console.WriteLine("**CLINK**");
-                    Thread.Sleep(800);
-                    Console.Clear();
-                    Console.WriteLine($"Here's a {coin.Key}");
-                    Thread.Sleep(500);
-                    Console.Clear();
-                }
-            }
+            
         }
         static decimal balance;
         public decimal Balance
