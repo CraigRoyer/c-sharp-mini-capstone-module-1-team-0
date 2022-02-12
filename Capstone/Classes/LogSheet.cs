@@ -61,7 +61,7 @@ namespace Capstone.Classes
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
-            if (change == 1 || change == 2 || change == 5 || change == 10)
+            if (change == 0 || change == 1 || change == 2 || change == 5 || change == 10)
             {
      
                 

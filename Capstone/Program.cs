@@ -21,7 +21,7 @@ namespace Capstone
             // while not choosing to exit 
             while (selector != 3)
             {
-                Console.Clear();
+                
 
                 // greeting screen
                 Console.WriteLine($"Hello Patron! Please enter" +

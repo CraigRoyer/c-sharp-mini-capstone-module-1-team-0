@@ -63,7 +63,7 @@ namespace Capstone.Classes
             }
 
             //populate vending machine here nerd
-            foodItems[0].GetType().GetMethod("PrintMessage").Invoke(foodItems[0], null);
+           
             //will print "thing"
         }
 
