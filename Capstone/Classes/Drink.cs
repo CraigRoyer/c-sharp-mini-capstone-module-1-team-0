@@ -8,7 +8,22 @@ namespace Capstone.Classes
     {
         public override void PrintMessage()
         {
-            Console.WriteLine("Glug Glug, Yum!");
+            
+            string title = @"
+                .=.
+                } {
+  ""Glug        .' '.
+    Glug,     /     \
+       Yum!""  ;'---';
+              |DRINK|
+              | .-. |
+              | '-' |
+              |'---'| jgs
+              '._._.'
+
+                            ";
+            Console.WriteLine(title);
+
         }
         public Drink(string location, string name, decimal cost) : base(location, name, cost) 
         { 

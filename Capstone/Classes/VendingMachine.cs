@@ -66,7 +66,7 @@ namespace Capstone.Classes
 
         public void PurchaseFood(LogSheet logsheet)
         {
-            this.DisplayItems(logsheet);
+            this.DisplayItems();
             logsheet.AdjustBalance(0);
             Console.WriteLine("Please enter item key:");//updates inventory and logsheet
             string order = Console.ReadLine();
@@ -94,7 +94,7 @@ namespace Capstone.Classes
         }
 
 
-        public void DisplayItems(LogSheet logSheet)
+        public void DisplayItems()
         {
             foreach (Food item in foodItems)
             {

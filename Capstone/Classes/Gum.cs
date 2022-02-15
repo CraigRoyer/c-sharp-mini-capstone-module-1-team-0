@@ -8,7 +8,19 @@ namespace Capstone.Classes
     {
         public override void PrintMessage()
         {
-            Console.WriteLine("Chew Chew, Yum!");
+            string title = @"
+
+     Here's your gum!
+        
+       .-_---------------. ""Chew            
+      / /_  | | |\  /|  /|     Chew,
+     /  \_/ \_/ | \/ | / |       Yum!""
+    :.________________/ /
+    | .--. .--. .--.  |/
+    '-----------------'
+                                   ";
+
+            Console.WriteLine(title);
         }
         public Gum(string location, string name, decimal cost) : base(location, name, cost) { }
     }

@@ -12,26 +12,28 @@ namespace Capstone.Classes
             balance = 0;
 
         }
-        public bool Audit(Food foodItem)
+        public bool Audit(Food foodItem) //updates logsheet / tracks transactions.
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
             string fullPath = Path.Combine(directory, file);
+            //making a path to logsheet
 
             try
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
-                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}"); //left off here
+                    sw.WriteLine($"{DateTime.UtcNow} {foodItem.Name} {this.Balance.ToString("C")} {(this.Balance - foodItem.Cost).ToString("C")}");
+                    // adds a line to logsheet file with date/time, food purchased, current balance, and balance after transaction   
                 }
                 return true;
             }
-            catch (IOException)
+            catch (IOException) //if for some reason we can't write a logsheet file...VERY WRONG
             {
                 Console.WriteLine("The Log file was corrupted");
                 return false;
             }
-            catch (Exception)
+            catch (Exception) //catch all exception (I.E. corrupted foodItem)
             {
 
                 Console.WriteLine("Vending machine self destructed!");
@@ -39,7 +41,7 @@ namespace Capstone.Classes
             }
         }
 
-        public bool Audit(decimal money) 
+        public bool Audit(decimal money) //tracks money added
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
@@ -69,28 +71,28 @@ namespace Capstone.Classes
 
         }
 
-        //public decimal ChangeOwed { get; set; } i dont think we need this anymore thanks DAVID
-        public bool AdjustBalance(decimal change) 
+        
+        public bool AdjustBalance(decimal change) // adjusts balance and determines if cash deposit was successful
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
             if (change == 0 || change == 1 || change == 2 || change == 5 || change == 10)
             {
-     
-                
-                    this.Audit(change);// also going to LOG cash inserted here.
-                    balance += change;
-                    Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
-                    return true;
-                
+
+
+                this.Audit(change);// also going to LOG cash inserted here.
+                balance += change;
+                Console.WriteLine($"Current Balance is: {balance.ToString("C")}");
+                return true;
+
             }
             // else if money inserted is not a positive INT
-            
-                Console.WriteLine("Invalid dollar amount. We only accept WHOLE DOLLAR$");
-                return false;
-            
+
+            Console.WriteLine("Invalid dollar amount. We only accept $1, $2, $5, or $10 bills.");
+            return false;
+
         }
-        public bool AdjustBalance(Food foodItem) 
+        public bool AdjustBalance(Food foodItem)
         {
 
             // if you adjust the balance and the amount is NOT negative it will change the Balance
@@ -110,17 +112,45 @@ namespace Capstone.Classes
             }
         }
 
-        public void GiveChange()
+        public void GiveChange(VendingMachine vendingMachine)
         {
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
             string fullPath = Path.Combine(directory, file);
+            decimal change = balance;
 
             try
             {
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
                     sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00");
+                    balance = 0M;
+                }
+                this.CreateSalesReport(vendingMachine);
+
+                Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
+                {
+                    ["Quarter"] = 0.25M,
+                    ["Dime"] = 0.10M,
+                    ["Nickel"] = 0.05M,
+                    
+                };
+                foreach (KeyValuePair<string, decimal> coin in coins)
+                {
+
+                    while (change >= coin.Value)
+                    {
+                        Console.WriteLine($"Your change is: {change.ToString("C")}");
+                        Thread.Sleep(800);
+                        Console.Clear();
+                        change -= coin.Value;
+                        Console.WriteLine("**CLINK**");
+                        Thread.Sleep(500);
+                        Console.Clear();
+                        Console.WriteLine($"Here's a {coin.Key}");
+                        Thread.Sleep(800);
+                        Console.Clear();
+                    }
                 }
             }
             catch (Exception)
@@ -128,41 +158,108 @@ namespace Capstone.Classes
 
                 Console.WriteLine("Vending machine self destructed!");
             }
-            Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
-            {
-                ["Quarter"] = 0.25M,
-                ["Dime"] = 0.10M,
-                ["Nickel"] = 0.05M
-            };
-            foreach (KeyValuePair<string, decimal> coin in coins)
-            {
-                while (balance >= coin.Value)
-                {
-                    Console.WriteLine($"Your change is: {balance.ToString("C")}");
-                    balance -= coin.Value;
-                    Console.WriteLine($"Here's a {coin.Key}");
-                    Thread.Sleep(800);
-                    Console.Clear();
-                    Console.WriteLine("CLINK");
-                    Thread.Sleep(500);
-                    Console.Clear();
-                }
-            }
+            
         }
-
-
-
         static decimal balance;
-        public decimal Balance 
-        { 
+        public decimal Balance
+        {
             get
-                
+
             { return balance; }
         }
-
-
-        public void PrintSalesReport()
+        public bool PrintSalesReport()
         {
+            string directory = Environment.CurrentDirectory;
+            string file = "SalesReport.txt";
+            string fullPath = Path.Combine(directory, file);
+            bool passed = false;
+            try
+            {
+                if (File.Exists(fullPath))
+                {
+                    using (StreamReader sr = new StreamReader(fullPath))
+                    {
+                        while (!sr.EndOfStream)
+                        {
+                            Console.WriteLine(sr.ReadLine());
+                        }
+                    }
+
+                    passed = true;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("There was an error with the sales report.");
+
+            }
+            Console.WriteLine("Please press enter to exit");
+            Console.ReadLine();
+            Console.Clear();
+            return passed;
+
+        }
+        public bool CreateSalesReport(VendingMachine machine) //pull up our current vending machine
+        {
+            string directory = Environment.CurrentDirectory;
+            string file = "SalesReport.txt";
+            string fullPath = Path.Combine(directory, file);
+
+            try
+            {
+                Dictionary<string, int> salesReport = new Dictionary<string, int>();
+                if (File.Exists(fullPath))
+                {
+                    using (StreamReader sr = new StreamReader(fullPath))
+                    {
+                        sr.ReadLine();
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] splitLine = line.Split("|");
+                            salesReport[splitLine[0]] = int.Parse(splitLine[1]);
+                        }
+                    }
+                }
+                foreach (Food item in machine.foodItems)
+                {
+                    if (salesReport.ContainsKey(item.Name))
+                    {
+                        int snacksSold = salesReport[item.Name] + (item.startingSnacks - item.SnacksLeft);
+                        salesReport[item.Name] = snacksSold; // calculate how many snacks we sold, using our starting snacks and subtracting our snacks left
+                    }
+                    else
+                    {
+                        salesReport[item.Name] = (item.startingSnacks - item.SnacksLeft); //will create a new item in the sales report if it wasn't originally in our .csv
+                    }
+                }
+                using (StreamWriter sw = new StreamWriter(fullPath, false)) //records the date/time of sales report being accessed
+                {
+                    sw.WriteLine($"{DateTime.UtcNow}");
+                    foreach (KeyValuePair<string, int> item in salesReport)
+                    {
+                        sw.WriteLine($"{item.Key}|{item.Value}");
+                    }
+                }
+                return true;
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("The Log file was corrupted");
+                return false;
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Vending machine self destructed!");
+                return false;
+            }
+
+
+
+
+
+
 
         }
     }

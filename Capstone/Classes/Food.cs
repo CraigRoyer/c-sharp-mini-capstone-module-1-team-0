@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    public class Food
+    public abstract class Food
     {
-        static int startingSnacks = 5;
+        public int startingSnacks = 5;
         public string Name { get; }
         public decimal Cost { get; set; }
         public string Location { get; }
@@ -19,7 +19,7 @@ namespace Capstone.Classes
             this.Cost = cost;
             this.SnacksLeft = startingSnacks;
         }
-        public virtual void PrintMessage() { }
+        public abstract void PrintMessage();
 
     }
 }
