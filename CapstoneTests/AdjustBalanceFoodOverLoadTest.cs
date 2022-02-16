@@ -14,7 +14,7 @@ namespace Capstone.Classes.Tests
         {
             //arrange
             LogSheet logSheet = new LogSheet();
-            Food item = new Food("here", "craig's crunchy cakes", 0.99M);
+            Chip item = new Chip("here", "craig's crunchy cakes", 0.99M);
             logSheet.AdjustBalance(5M);
 
             //act
@@ -28,7 +28,7 @@ namespace Capstone.Classes.Tests
         {
             //arrange
             LogSheet logSheet = new LogSheet();
-            Food item = new Food("here", "craig's crunchy cakes", 0.99M);
+            Chip item = new Chip("here", "craig's crunchy cakes", 0.99M);
 
             //act
             bool result = logSheet.AdjustBalance(item);
@@ -41,7 +41,7 @@ namespace Capstone.Classes.Tests
         {
             //arrange
             LogSheet logSheet = new LogSheet();
-            Food item = new Food("here", "craig's crunchy cakes", 1.99M);
+            Chip item = new Chip("here", "craig's crunchy cakes", 1.99M);
             logSheet.AdjustBalance(1M);
 
             //act

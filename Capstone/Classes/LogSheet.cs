@@ -114,20 +114,26 @@ namespace Capstone.Classes
 
         public void GiveChange(VendingMachine vendingMachine)
         {
+            // creating LOG file
             string directory = Environment.CurrentDirectory;
             string file = "Log.txt";
             string fullPath = Path.Combine(directory, file);
+            // change is what is returning from the balance they had left after purchasing food.
             decimal change = balance;
 
             try
             {
+                //  updates without deleting if it exists. if it does not exist it will create a new one.
                 using (StreamWriter sw = new StreamWriter(fullPath, true))
                 {
+                    //              current date/time              balance displayer using currency formatter
                     sw.WriteLine($"{DateTime.UtcNow} GIVE CHANGE: {Balance.ToString("C")} $0.00");
                     balance = 0M;
                 }
+                // update sales report file 
                 this.CreateSalesReport(vendingMachine);
 
+                // creating new dictionary for giving correct change in only coins
                 Dictionary<string, decimal> coins = new Dictionary<string, decimal>()
                 {
                     ["Quarter"] = 0.25M,
@@ -135,11 +141,13 @@ namespace Capstone.Classes
                     ["Nickel"] = 0.05M,
                     
                 };
+                
                 foreach (KeyValuePair<string, decimal> coin in coins)
                 {
 
                     while (change >= coin.Value)
                     {
+                        // used to display coins dropping into change return...... slowly
                         Console.WriteLine($"Your change is: {change.ToString("C")}");
                         Thread.Sleep(800);
                         Console.Clear();
@@ -169,9 +177,11 @@ namespace Capstone.Classes
         }
         public bool PrintSalesReport()
         {
+            // secret sales report if 4 is chosen on first screen
             string directory = Environment.CurrentDirectory;
             string file = "SalesReport.txt";
             string fullPath = Path.Combine(directory, file);
+            // if sales report should fail, it will return false. wasnt used but could be in the future.
             bool passed = false;
             try
             {
@@ -199,7 +209,7 @@ namespace Capstone.Classes
             return passed;
 
         }
-        public bool CreateSalesReport(VendingMachine machine) //pull up our current vending machine
+        public bool CreateSalesReport(VendingMachine machine) //pull up our current vending machine being ran
         {
             string directory = Environment.CurrentDirectory;
             string file = "SalesReport.txt";
@@ -215,12 +225,16 @@ namespace Capstone.Classes
                         sr.ReadLine();
                         while (!sr.EndOfStream)
                         {
+                            // created parameter for each line the streamreader reads within the file
                             string line = sr.ReadLine();
                             string[] splitLine = line.Split("|");
+                            // if the sales report already exists, it will grab the line being used and add it to the dictionary we created
+                            // if it does not already exist it will skip this
                             salesReport[splitLine[0]] = int.Parse(splitLine[1]);
                         }
                     }
                 }
+                // updates sales report
                 foreach (Food item in machine.foodItems)
                 {
                     if (salesReport.ContainsKey(item.Name))
@@ -243,6 +257,7 @@ namespace Capstone.Classes
                 }
                 return true;
             }
+            // if file does not exist or something blocking file from being accessed.
             catch (IOException)
             {
                 Console.WriteLine("The Log file was corrupted");

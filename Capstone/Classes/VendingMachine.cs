@@ -21,16 +21,23 @@ namespace Capstone.Classes
                 {
                     while (!sr.EndOfStream)
                     {
-                        string line = sr.ReadLine();
                         //reading each line of the csv file
-                        string[] splitLine = line.Split("|");
+                        string line = sr.ReadLine();
+
                         //separating the info from each line
+                        string[] splitLine = line.Split("|");
+
+                        //retrieving the classname, location, name, price
+
+                        // format of CSV file is: location | itemName | price | class (gum candy etc)
                         string className = splitLine[splitLine.Length - 1];
                         string location = splitLine[0];
                         string itemName = splitLine[1];
+                        // parse decimal from file / string array
                         decimal price = decimal.Parse(splitLine[2]);
-                        //retrieving the classname, location, name, price
                         
+                        
+                        // adding each class of food to foodItems list
                         if (className == "Candy")
                         {
                             Candy item = new Candy(location, itemName, price);
@@ -54,10 +61,12 @@ namespace Capstone.Classes
                     }
                 }
             }
+            // if someone deleted the CSV file, wouldnt be able to find the information and would return as follows.
             catch (IOException)
             {
                 Console.WriteLine("The vending machine file was not found");
             }
+            // any other exception that falls outside of our parameters.
             catch (Exception)
             {
                 Console.WriteLine("There was a mistake inside the vending machine file");
@@ -67,7 +76,9 @@ namespace Capstone.Classes
         public void PurchaseFood(LogSheet logsheet)
         {
             this.DisplayItems();
+            // displays current balance 
             logsheet.AdjustBalance(0);
+
             Console.WriteLine("Please enter item key:");//updates inventory and logsheet
             string order = Console.ReadLine();
             Console.Clear();

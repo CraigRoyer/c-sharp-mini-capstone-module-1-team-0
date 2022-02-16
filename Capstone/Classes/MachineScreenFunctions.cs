@@ -69,6 +69,7 @@ namespace Capstone.Classes
             string cashInserted = Console.ReadLine();
             Console.Clear();
 
+            // if they enter words or strings instead of an accepted value (decimal) return as follows
             while (!decimal.TryParse(cashInserted, out decimal num))
             {
 
@@ -76,6 +77,9 @@ namespace Capstone.Classes
                 cashInserted = Console.ReadLine();
                 Console.Clear();
             }
+            // turns cashInserted into a decimal for Cash
+            // then adding it to the LogSheet
+            // also updating current Balance
             decimal cash = decimal.Parse(cashInserted);
             logSheet.AdjustBalance(cash);
         }

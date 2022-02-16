@@ -25,7 +25,7 @@ namespace Capstone.Classes.Tests
         public void Audit_FoodHappyPath()
         {
             //Arrange
-            Food item = new Food("here", "craig's crunchy cakes", 0.99M);
+            Chip item = new Chip("here", "craig's crunchy cakes", 0.99M);
 
             //Act
             bool result = new LogSheet().Audit(item);

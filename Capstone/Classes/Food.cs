@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Capstone.Classes
 {
+    // abstract class because we dont just creat basic foods. only artistic abstract foods.
     public abstract class Food
     {
         public int startingSnacks = 5;
